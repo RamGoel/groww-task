@@ -3,27 +3,27 @@ import { createSlice } from "@reduxjs/toolkit";
 export interface StockSliceProps {
     gainers: any,
     losers: any,
+    tab1: string
 }
 const initialState:StockSliceProps = {
     gainers: null,
     losers: null,
+    tab1:"Hello"
 }
 
 
-interface actionType{
-    payload:any
-}
+
 const stockSlice = createSlice({
-    name: "explore",
-    initialState: initialState,
+    name: "stock",
+    initialState,
     reducers: {
-        saveGainers: (action:actionType, state:StockSliceProps) => {
+        saveGainers: (state, action) => {
             state.gainers=action.payload
         },
-        saveLosers: (action:actionType, state:StockSliceProps) => {
+        saveLosers: (state, action) => {
             state.losers=action.payload
         },
-    }
+    },
 })
 
 export const { saveGainers, saveLosers } = stockSlice.actions;

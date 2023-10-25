@@ -9,13 +9,17 @@ const config: Config = {
   ],
   theme: {
     colors: {
+      transparent: 'transparent',
+      current: 'currentColor',
       white: "#fff",
       black: "#000",
       brandgreen: "#00B6AA",
       brandblue: "#5367FF",
       brandgreenlight: "rgba(0, 182, 170, 0.29)",
       green: "#19B000",
-      red:"#B00000"
+      red: "#B00000",
+      greylight: "#e4e4e7",
+      greydark:"#18181b"
     },
     extend: {
       backgroundImage: {

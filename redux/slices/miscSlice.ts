@@ -8,7 +8,7 @@ export interface MiscSliceProps {
 const initialState:MiscSliceProps = {
     loader: false,
     isDarkMode: false,
-    tab: "gainers"
+    tab: "Top Gainers"
 }
 
 

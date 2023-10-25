@@ -23,7 +23,12 @@ const SearchResults = ({ query }: { query: string }) => {
         return error
       }
     }
-    fetchResults(query)
+    const timeoutId = setTimeout(() => {
+      fetchResults(query)
+    
+    }, 1000)
+    
+    return () => clearTimeout(timeoutId)
   }, [query, dispatch])
 
 

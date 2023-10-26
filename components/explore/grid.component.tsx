@@ -4,7 +4,7 @@ import StockCard from './card.component'
 import { API } from '@/api/client'
 import { useDispatch, useSelector } from 'react-redux';
 import { GlobalState } from '@/redux/store';
-import { saveGainers, saveLosers } from '@/redux/slices/stockSlice';
+import { saveActivelyTraded, saveGainers, saveLosers } from '@/redux/slices/stockSlice';
 import { ActionLoader } from '../loader/actionloader.component';
 import { ArrowDown2 } from 'iconsax-react';
 import { disableLoader, enableLoader } from '@/redux/slices/miscSlice';
@@ -14,6 +14,7 @@ import { ScreenLoader } from '../loader/loader.component';
 const StockGrid = () => {
     const gainers = useSelector((state: GlobalState) => state.stock.gainers)
     const losers = useSelector((state: GlobalState) => state.stock.losers)
+    const activelyTraded = useSelector((state: GlobalState) => state.stock.activelyTraded)
     const tab = useSelector((state: GlobalState) => state.misc.tab)
     const dispatch = useDispatch()
     const loader = useSelector((state: GlobalState) => state.misc.loader)
@@ -26,6 +27,7 @@ const StockGrid = () => {
             console.log(res.data)
             dispatch(saveGainers([...gainers, ...res.data.top_gainers]))
             dispatch(saveLosers([...losers, ...res.data.top_losers]))
+            dispatch(saveActivelyTraded([...activelyTraded, ...res.data.most_actively_traded]))
         } catch (error) {
             console.log(error)
             return error
@@ -42,6 +44,7 @@ const StockGrid = () => {
                 console.log(res.data)
                 dispatch(saveGainers(res.data.top_gainers))
                 dispatch(saveLosers(res.data.top_losers))
+                dispatch(saveActivelyTraded(res.data.most_actively_traded))
             } catch (error) {
                 console.log(error)
                 return error
@@ -62,7 +65,9 @@ const StockGrid = () => {
                 {
                     tab === "Top Gainers" ? gainers.map((item: any) => {
                         return <StockCard key={item.symbol} stock={item} />
-                    }) : losers.map((item: any) => {
+                    }) : tab==="Top Losers"? losers.map((item: any) => {
+                        return <StockCard key={item.symbol} stock={item} />
+                    }) : activelyTraded.map((item: any) => {
                         return <StockCard key={item.symbol} stock={item} />
                     })
                 }

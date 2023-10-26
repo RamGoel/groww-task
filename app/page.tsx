@@ -6,6 +6,7 @@ import Menu from '@/components/explore/menu.component';
 import { GlobalState } from '@/redux/store';
 import { useSelector } from 'react-redux';
 
+
 export default function Home() {
   const isDarkMode = useSelector((state: GlobalState) => state.misc.isDarkMode)
 

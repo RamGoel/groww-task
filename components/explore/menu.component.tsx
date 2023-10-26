@@ -4,11 +4,12 @@ import Chip from '../common/chip.component'
 import { useDispatch, useSelector } from 'react-redux';
 import { changeTab } from '@/redux/slices/miscSlice';
 import { GlobalState } from '@/redux/store';
-import { saveGainers, saveLosers } from '@/redux/slices/stockSlice';
+import { saveActivelyTraded, saveGainers, saveLosers } from '@/redux/slices/stockSlice';
 
 const arr = [
   { key: 1, title: "Top Gainers" },
   { key: 2, title: "Top Losers" },
+  { key: 3, title: "Most Actively Traded" },
 ]
 const sortMapper = [
   { key: 1, title: "Sort by percentage" },
@@ -20,6 +21,7 @@ const Menu = () => {
   const tab = useSelector((state: GlobalState) => state.misc.tab)
   const gainers = useSelector((state: GlobalState) => state.stock.gainers)
   const losers = useSelector((state: GlobalState) => state.stock.losers)
+  const activelyTraded = useSelector((state: GlobalState) => state.stock.activelyTraded)
   const dispatch = useDispatch();
 
 
@@ -29,11 +31,16 @@ const Menu = () => {
         return parseFloat(b.change_percentage) - parseFloat(a.change_percentage)
       })
       dispatch(saveGainers(sortedData))
-    } else {
+    } else if(tab==='Top Losers'){
       const sortedData = [...losers].sort((a: any, b: any) => {
         return parseFloat(b.change_percentage) - parseFloat(a.change_percentage)
       })
       dispatch(saveLosers(sortedData))
+    } else {
+      const sortedData = [...activelyTraded].sort((a: any, b: any) => {
+        return parseFloat(b.change_percentage) - parseFloat(a.change_percentage)
+      })
+      dispatch(saveActivelyTraded(sortedData))
     }
   }
   const sortByPrice = () => {
@@ -42,11 +49,16 @@ const Menu = () => {
         return parseFloat(b.change_amount) - parseFloat(a.change_amount)
       })
       dispatch(saveGainers(sortedData))
-    } else {
+    } else if(tab==='Top Losers') {
       const sortedData = [...losers].sort((a: any, b: any) => {
         return parseFloat(b.change_amount) - parseFloat(a.change_amount)
       })
       dispatch(saveLosers(sortedData))
+    } else {
+      const sortedData = [...activelyTraded].sort((a: any, b: any) => {
+        return parseFloat(b.change_amount) - parseFloat(a.change_amount)
+      })
+      dispatch(saveActivelyTraded(sortedData))
     }
   }
   return (
@@ -61,7 +73,7 @@ const Menu = () => {
             </button>
           })
         }
-        <div className={`toggle-line ${tab==="Top Losers"?'move-line':''}`}></div>
+        <div className={`toggle-line ${tab==="Top Losers"?'move-line':tab==='Most Actively Traded'?'move-2next':''}`}></div>
       </div>
       <div className='flex items-center justify-between'>
         {

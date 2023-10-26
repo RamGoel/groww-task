@@ -15,6 +15,11 @@
 .move-line{
   left: 150px;
 }
+.move-2next{
+  left: 280px;
+  width: 200px;
+
+}
 
 .loader-overlay{
   position: fixed;

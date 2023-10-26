@@ -13,6 +13,7 @@ const config: Config = {
       current: 'currentColor',
       white: "#fff",
       whiteopaque:"rgba(255,255,255,0.5)",
+      blackopaque:"rgba(0,0,0,0.5)",
       black: "#000",
       brandgreen: "#00B6AA",
       brandblue: "#5367FF",

@@ -5,19 +5,19 @@
 
 .toggle-line{
   height: 3px;
-  width: 120px;
+  width: 100px;
   position: absolute;
-  top:33px;
+  top:27px;
   left: 10px;
   background-color: #00B6AA;
   transition: .3s ease-in-out;
 }
 .move-line{
-  left: 150px;
+  left: 120px;
 }
 .move-2next{
-  left: 280px;
-  width: 200px;
+  left: 235px;
+  width: 170px;
 
 }
 

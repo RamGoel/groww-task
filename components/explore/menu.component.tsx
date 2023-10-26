@@ -69,7 +69,7 @@ const Menu = () => {
             return <button key={item.key} onClick={() => {
               dispatch(changeTab(item.title))
             }} className={` mx-3 hover:scale-105 transition-all cursor-pointer toggle-tab`}>
-              <h1 className='text-xl text-black dark:text-white font-semibold'>{item.title}</h1>
+              <h1 className='text-md text-black dark:text-white font-semibold'>{item.title}</h1>
             </button>
           })
         }

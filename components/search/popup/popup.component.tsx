@@ -54,7 +54,7 @@ const SearchResults = ({query, setQuery}: { query: string, setQuery: Function })
 
     return (
         <div
-            className='absolute  mt-2 shadow-lg p-6 rounded-2xl w-full  bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-50'
+            className='absolute mt-2 shadow-lg p-6 rounded-2xl w-full md:w-1/2  bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-50'
             style={{maxWidth: 500, zIndex: 999999999}}>
             <div className='flex items-center mt-2 justify-start'>
                 {

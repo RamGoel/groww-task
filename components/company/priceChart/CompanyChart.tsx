@@ -1,31 +1,32 @@
-import React, { useEffect, useState } from 'react'
-import { Line } from "@ant-design/charts";
-import { ScreenLoader } from '../../loader/screenLoader/loader.component';
-import { useAppDispatch } from '@/redux/provider';
-import { fetchChartData } from './chart.actions';
-import { ActionLoader } from '@/components/loader/actionLoader/loader.component';
+import React, {useEffect, useState} from 'react'
+import {Line} from "@ant-design/charts";
+import {ScreenLoader} from '../../loader/screenLoader/loader.component';
+import {useAppDispatch} from '@/redux/provider';
+import {fetchChartData} from './chart.actions';
+import {ActionLoader} from '@/components/loader/actionLoader/loader.component';
 
 export interface ChartProps {
     Symbol: string
 }
+
 const ranges = [
     {
-        text: 'Intraday',
+        text: '24H',
         value: "TIME_SERIES_INTRADAY"
     }, {
-        text: 'Daily',
+        text: '1D',
         value: "TIME_SERIES_DAILY"
     }, {
-        text: 'Weekly',
+        text: '1W',
         value: "TIME_SERIES_WEEKLY"
     }, {
-        text: 'Monthly',
+        text: '1M',
         value: "TIME_SERIES_MONTHLY"
     },
 ]
 
 
-const Chart = ({ Symbol }: ChartProps) => {
+const Chart = ({Symbol}: ChartProps) => {
     const [chartData, setChartData] = useState<Array<any> | null>(null)
     const [axisMin, setAxisMin] = useState(0);
     const [axisMax, setAxisMax] = useState(0);
@@ -35,14 +36,15 @@ const Chart = ({ Symbol }: ChartProps) => {
 
 
     useEffect(() => {
-        function fetchData(){
+        function fetchData() {
             dispatch(fetchChartData(setIsLoading, fetchFn, Symbol, setChartData, setAxisMin, setAxisMax))
         }
+
         fetchData()
     }, [Symbol, dispatch, fetchFn])
 
     if (!chartData) {
-        return <ScreenLoader />
+        return <ScreenLoader/>
     }
     return (
         <div className='w-10/12 mx-auto my-5'>
@@ -59,20 +61,23 @@ const Chart = ({ Symbol }: ChartProps) => {
                     tickCount: 5,
                 }}
                 yAxis={{
-                    grid: { line: { style: { lineWidth: 0 } } },
+                    grid: {line: {style: {lineWidth: 0}}},
                     min: axisMin,
                     max: axisMax,
                 }}
                 smooth
             />
 
-            <div className='flex flex-wrap gap-2 items-center my-4 justify-center'>
+            <div className='flex flex-wrap w-full md:w-1/2 lg:w-1/3 mx-auto gap-2 items-center my-10 justify-around'>
                 {
                     ranges.map((item) => {
                         return <div key={item.value} onClick={() => {
                             setFunction(item.value)
-                        }} className={`${fetchFn === item.value ? 'bg-brandgreen text-white border-2 border-brandgreen' : 'bg-white border-2 border-brandgreen text-brandgreen'} hover:bg-brandgreenlight cursor-pointer py-1 px-2 rounded-full flex items-center justify-center mx-2`} style={{minWidth:70, height:30}} >
-                            <span className={`text-xs font-semibold`}>{isLoading && fetchFn === item.value ? <ActionLoader /> : item.text}</span>
+                        }}
+                                    className={`${fetchFn === item.value ? 'bg-brandgreen text-white border-2 border-brandgreen' : 'bg-white dark:bg-black border-2 border-brandgreen text-brandgreen'} hover:bg-brandgreenlight cursor-pointer py-1 rounded-full flex items-center justify-center w-full sm:w-1/2 md:w-1/4 lg:w-1/5`}
+                                    style={{height: 40, width: 40}}>
+                            <span className={`text-xs font-semibold`}>{isLoading && fetchFn === item.value ?
+                                <ActionLoader/> : item.text}</span>
                         </div>
                     })
                 }

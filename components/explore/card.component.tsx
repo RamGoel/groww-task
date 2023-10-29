@@ -11,7 +11,7 @@ const StockCard = ({ stock }: { stock: any }) => {
         <Link href={`/company?id=${'IBM'}`} onClick={() => {
             dispatch(saveSelectedCard(stock))
         }}>
-        <div className='rounded-xl mx-auto transition-all cursor-pointer p-4 border-2 border-greylight  my-3' style={{ width: 300 }}>
+        <div className='rounded-xl mx-auto transition-all cursor-pointer p-4 border-2 border-greylight  my-3' style={{ maxWidth: 300 }}>
             <div className='flex items-start justify-between'>
             <Logo name={ticker} />
             <p className='text-right font-semibold text-black dark:text-white'>{volume}+ available </p>

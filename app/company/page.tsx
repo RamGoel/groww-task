@@ -4,7 +4,7 @@ import Chip from '@/components/common/chip.component';
 import Header from '@/components/common/header.component';
 import Info from '@/components/common/info.component';
 import CompanyAbout from '@/components/company/about.component';
-import CompanyHeader from '@/components/company/card';
+import CompanyHeader from '@/components/company/company.header';
 import Chart from '@/components/company/chart.component';
 import { disableLoader, enableLoader } from '@/redux/slices/miscSlice';
 import { saveCompanyData } from '@/redux/slices/stockSlice';
@@ -48,7 +48,7 @@ const CompanyPage = () => {
 
         <Header />
         <CompanyHeader {...companyData} />
-        <div className="flex items-center w-10/12 mx-auto my-3">
+        <div className="flex flex-wrap gap-2 items-center w-10/12 mx-auto my-3">
           <Chip isSelected={false} text={`SECTOR: ${companyData.Sector}`} />
           <Chip isSelected={false} text={`INDUSTRY: ${companyData.Industry}`} />
         </div>
@@ -56,7 +56,7 @@ const CompanyPage = () => {
 
         <CompanyAbout {...companyData} />
 
-        <div className="flex items-center w-10/12 mx-auto mt-4 py-4">
+        <div className="flex gap-3 flex-wrap items-center w-10/12 mx-auto mt-4 py-4">
           <Info title={'Price/Earning Ratio '} value={companyData?.PERatio} />
           <Info title={'PE to Growth Ratio'} value={companyData?.PEGRatio} />
           <Info title={'Dividend per share'} value={companyData?.DividendPerShare} />

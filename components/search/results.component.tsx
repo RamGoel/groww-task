@@ -33,7 +33,7 @@ const SearchResults = ({ query }: { query: string }) => {
 
 
   return (
-    <div className=' absolute z-100 bg-white dark:bg-black mt-2 shadow-lg p-6 rounded-2xl' style={{ width: 500 }}>
+    <div className=' absolute bg-white dark:bg-black mt-2 shadow-lg p-6 rounded-2xl w-full' style={{ maxWidth: 500, zIndex:999999999 }}>
       {
         results?results.map((item: any) => {
           return <SearchCard item={item} key={item['1. symbol']} />

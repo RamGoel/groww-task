@@ -25,9 +25,13 @@ const CompanyPage = () => {
   const change_percentage = searchParams.get('change_percentage')
   const dispatch = useAppDispatch()
 
+ 
   useEffect(() => {
-    dispatch(getCompanyData(id ?? 'IBM'))
-  }, [dispatch])
+    function fetchCompanyDataAction() {
+      dispatch(getCompanyData(id ?? 'IBM'))
+    }
+    fetchCompanyDataAction()
+  }, [])
 
   if (!companyData || !companyData.Symbol) {
     return <ScreenLoader />;

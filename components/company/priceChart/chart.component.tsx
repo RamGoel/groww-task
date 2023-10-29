@@ -33,9 +33,13 @@ const Chart = ({ Symbol }: ChartProps) => {
     const dispatch = useAppDispatch()
     const [isLoading, setIsLoading] = useState(false)
 
+    
     useEffect(() => {
-        dispatch(fetchChartData(setIsLoading, fetchFn, Symbol, setChartData, setAxisMin, setAxisMax))
-    }, [Symbol, fetchFn])
+        function fetchData(){     
+            dispatch(fetchChartData(setIsLoading, fetchFn, Symbol, setChartData, setAxisMin, setAxisMax))
+        }
+        fetchData()
+    }, [])
 
     if (!chartData) {
         return <ScreenLoader />

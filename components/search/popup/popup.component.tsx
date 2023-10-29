@@ -1,7 +1,7 @@
 import { saveResults } from '@/redux/slices/stockSlice'
 import { GlobalState } from '@/redux/store'
 import React, { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { ActionLoader } from '../../loader/actionLoader/loader.component'
 import SearchCard from '../item/item.component'
 import Chip from '../../common/textChip/chip.component'
@@ -23,16 +23,27 @@ const SearchResults = ({ query, setQuery }: { query: string, setQuery: Function 
   const dispatch = useAppDispatch()
 
 
-  useEffect(() => {
-    const storedSearches = StorageUtils._retrieve(CommonConstants.recentSearchesKey);
-    if (storedSearches) {
-      dispatch(saveRecentSearches(JSON.parse(storedSearches)));
-    }
 
-    return () => {
-      StorageUtils._save(CommonConstants.recentSearchesKey, recentSearches);
+  useEffect(() => {
+    function retrieveSearches(){
+      const storedSearches = StorageUtils._retrieve(CommonConstants.recentSearchesKey);
+      if (storedSearches) {
+        dispatch(saveRecentSearches(JSON.parse(storedSearches)));
+      }
     }
-  }, []);
+    retrieveSearches();
+
+  }, [dispatch]);
+
+
+  // @ts-ignore
+  const addToRecentSearches = () => {
+    if (recentSearches.includes(query)) return
+    dispatch(saveRecentSearches([...recentSearches, query]))
+  }
+  useEffect(() => {
+    addToRecentSearches()
+  },[addToRecentSearches])
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
@@ -43,7 +54,7 @@ const SearchResults = ({ query, setQuery }: { query: string, setQuery: Function 
       clearTimeout(timeoutId)
       dispatch(saveResults(null))
     }
-  }, [query, dispatch])
+  }, [query, dispatch, recentSearches])
 
 
   return (

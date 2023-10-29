@@ -1,5 +1,4 @@
 import { API } from "@/libs/client"
-import { disableLoader, enableLoader } from "@/redux/slices/miscSlice"
 import { CommonConstants } from "@/utils/constants"
 import toast from "react-hot-toast/headless"
 import { convertDateToReadable } from "./chart.functions"
@@ -28,6 +27,7 @@ export const fetchChartData = (
             } else {
                 res = await API.get('/', { params: { function: fetchFn, symbol: Symbol } })
             }
+                // @ts-ignore
                 const chartDates = res.data[mapper[fetchFn]]
                 const chartDateAndClose = Object.keys(chartDates).map((date: string) => {
                     return {

@@ -31,7 +31,7 @@ export default function addInterceptor(_API: any) {
                 if (isThrowError) {
                     throw customError;
                 }
-                // location.replace('error')
+                location.replace('error')
             }
         }
         return response

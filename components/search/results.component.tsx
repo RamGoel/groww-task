@@ -12,12 +12,12 @@ import { SearchNormal1, TrendUp } from 'iconsax-react'
 
 
 
-const SearchResults = ({ query, setQuery }: { query: string, setQuery:Function }) => {
+const SearchResults = ({ query, setQuery }: { query: string, setQuery: Function }) => {
   const results = useSelector((state: GlobalState) => state.stock.searchResults)
   const recentSearches = useSelector((state: GlobalState) => state.misc.recentSearches)
   const [types, setTypes] = React.useState<Array<string>>([])
   const [category, setCategory] = React.useState('All')
-  const [isLoading, setLoading]=React.useState(false)
+  const [isLoading, setLoading] = React.useState(false)
   const dispatch = useDispatch()
 
 
@@ -37,7 +37,7 @@ const SearchResults = ({ query, setQuery }: { query: string, setQuery:Function }
       try {
         setLoading(true)
         const res = await API.get('/', { params: { function: 'SYMBOL_SEARCH', keywords: _query } })
-        const uniqueTypes = new Set(res.data.bestMatches.map((item: any) => item['3. type']))
+        const uniqueTypes: Array<string> = Array.from(new Set(res.data.bestMatches.map((item: any) => item['3. type'])))
         const uniqueTypesArr = ['All', ...uniqueTypes]
         dispatch(saveResults(res.data.bestMatches))
         setTypes([...uniqueTypesArr])
@@ -82,7 +82,7 @@ const SearchResults = ({ query, setQuery }: { query: string, setQuery:Function }
         <div>
           {
             recentSearches ? recentSearches.map((item: any) => {
-              if(!item.toLowerCase().includes(query.toLowerCase())) return null
+              if (!item.toLowerCase().includes(query.toLowerCase())) return null
               return <p
                 key={item}
                 onClick={() => setQuery(item)}
@@ -102,7 +102,7 @@ const SearchResults = ({ query, setQuery }: { query: string, setQuery:Function }
           }) : null
         }
       </div>}
-      
+
     </div>
   )
 }

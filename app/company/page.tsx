@@ -11,6 +11,7 @@ import {useSelector} from 'react-redux';
 import {getCompanyData} from './company.actions';
 import {useAppDispatch} from '@/redux/provider';
 import {ActionLoader} from "@/components/loader/actionLoader/loader.component";
+import dynamic from "next/dynamic";
 
 
 const CompanyPage = () => {
@@ -45,10 +46,16 @@ const CompanyPage = () => {
             <div className='bg-white dark:bg-black '>
 
                 <Header/>
-                {selectedCard ? <CompanyHeader Symbol={selectedCard.ticker} price={selectedCard.price}
-                                               change_amount={selectedCard.change_amount}
-                                               change_percentage={selectedCard.change_percentage} {...companyData} />
-                    : null}
+                {selectedCard
+                    ? <CompanyHeader
+                        Symbol={selectedCard.ticker}
+                        price={selectedCard.price}
+                        change_amount={selectedCard.change_amount}
+                        change_percentage={selectedCard.change_percentage}
+                        {...companyData}
+                    />
+                    : null
+                }
                 <div className="flex flex-wrap gap-2 items-center w-10/12 mx-auto my-3">
                     <Chip isSelected={false} text={`SECTOR: ${companyData.Sector}`}/>
                     <Chip isSelected={false} text={`INDUSTRY: ${companyData.Industry}`}/>
@@ -72,4 +79,8 @@ const CompanyPage = () => {
     )
 }
 
-export default CompanyPage
+const CompanyPageWithoutSSR = dynamic(() => Promise.resolve(CompanyPage), {
+    ssr: false,
+})
+
+export default CompanyPageWithoutSSR

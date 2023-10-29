@@ -9,9 +9,10 @@ import Chart from '@/components/company/chart.component';
 import { disableLoader, enableLoader } from '@/redux/slices/miscSlice';
 import { saveCompanyData } from '@/redux/slices/stockSlice';
 import { GlobalState } from '@/redux/store';
-import { useRouter, useSearchParams } from 'next/navigation'
-import React, { useEffect, useMemo } from 'react'
+import { useSearchParams } from 'next/navigation'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
+import toast from 'react-hot-toast';
 
 
 const CompanyPage = () => {
@@ -26,10 +27,17 @@ const CompanyPage = () => {
     const fetchCompanyData = async () => {
       dispatch(enableLoader())
       try {
-        const res = await API.get('/', { params: { function: 'OVERVIEW', symbol: id, apikey: process.env.NEXT_PUBLIC_API_KEY } })
+        const res = await API.get('/', { params: { function: 'OVERVIEW', symbol: id } })
+        console.log(res.data)
+        if (res.data['Error Message']) {
+          toast.error('No Data Found')
+          throw new Error('API Limit Reached')
+
+        }
         dispatch(saveCompanyData(res.data))
       } catch (err) {
         console.log(err)
+        dispatch(saveCompanyData(null))
       } finally {
         dispatch(disableLoader())
       }
@@ -40,7 +48,6 @@ const CompanyPage = () => {
   if (!companyData) {
     return null;
   }
-
 
   return (
     <div className={`${isDarkMode ? 'dark' : ''}`}>

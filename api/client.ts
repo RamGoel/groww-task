@@ -1,5 +1,7 @@
 import axios from "axios";
 
-export const API = axios.create({
+const API = axios.create({
     baseURL: 'https://www.alphavantage.co/query'
 })
+
+export { API };

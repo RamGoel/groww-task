@@ -9,7 +9,7 @@ export interface ChipProps {
 const Chip = ({ text, onClick, isSelected }: ChipProps) => {
   return (
     <button onClick={onClick} className={`${isSelected ? 'bg-brandgreen' : 'bg-brandgreenlight'} p-1 px-3  transition-all rounded-full mx-2`}>
-      <p className={`${isSelected ? 'text-white' : 'text-brandgreen'} text-xs md:text-sm font-semibold  `}>{text}</p>
+      <p className={`${isSelected ? 'text-white' : 'text-brandgreen'} text-xs font-semibold  `}>{text}</p>
     </button>
   )
 }

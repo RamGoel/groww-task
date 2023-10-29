@@ -5,10 +5,10 @@ import { API } from '@/api/client'
 import { useDispatch, useSelector } from 'react-redux';
 import { GlobalState } from '@/redux/store';
 import { saveActivelyTraded, saveGainers, saveLosers } from '@/redux/slices/stockSlice';
-import { ActionLoader } from '../loader/actionloader.component';
 import { ArrowDown2 } from 'iconsax-react';
 import { disableLoader, enableLoader } from '@/redux/slices/miscSlice';
 import { ScreenLoader } from '../loader/loader.component';
+import toast from 'react-hot-toast';
 
 
 const StockGrid = () => {
@@ -23,7 +23,7 @@ const StockGrid = () => {
     const fetchMoreData = async () => {
         dispatch(enableLoader())
         try {
-            const res = await API.get('/', { params: { function: 'TOP_GAINERS_LOSERS', apikey: process.env.NEXT_PUBLIC_API_KEY } })
+            const res = await API.get('/', { params: { function: 'TOP_GAINERS_LOSERS' } })
             console.log(res.data)
             dispatch(saveGainers([...gainers, ...res.data.top_gainers]))
             dispatch(saveLosers([...losers, ...res.data.top_losers]))
@@ -40,12 +40,13 @@ const StockGrid = () => {
         const fetchData = async () => {
             dispatch(enableLoader())
             try {
-                const res = await API.get('/', { params: { function: 'TOP_GAINERS_LOSERS', apikey: process.env.NEXT_PUBLIC_API_KEY } })
+                const res = await API.get('/', { params: { function: 'TOP_GAINERS_LOSERS' } })
                 console.log(res.data)
                 dispatch(saveGainers(res.data.top_gainers))
                 dispatch(saveLosers(res.data.top_losers))
                 dispatch(saveActivelyTraded(res.data.most_actively_traded))
             } catch (error) {
+                toast.error("Some Error Occured")
                 console.log(error)
                 return error
             } finally {
@@ -61,7 +62,7 @@ const StockGrid = () => {
     return (
         <div>
 
-            <div className='grid w-11/12 mx-auto grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 justify-between '>
+            <div className='grid w-11/12 gap-4 mx-auto grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 2xl:grid-cols-5 justify-between '>
                 {
                     tab === "Top Gainers" ? gainers.map((item: any) => {
                         return <StockCard key={item.symbol} stock={item} />

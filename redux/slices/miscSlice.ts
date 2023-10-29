@@ -3,12 +3,14 @@ import { createSlice } from "@reduxjs/toolkit";
 export interface MiscSliceProps {
     loader: boolean,
     isDarkMode: boolean,
-    tab: string
+    tab: string,
+    recentSearches: any,
 }
 const initialState:MiscSliceProps = {
     loader: false,
     isDarkMode: false,
-    tab: "Top Gainers"
+    tab: "Top Gainers",
+    recentSearches:null
 }
 
 
@@ -28,10 +30,13 @@ const miscSlice = createSlice({
         disableLoader: (state ) => {
             state.loader=false
         },
+        saveRecentSearches: (state, action) => {
+            state.recentSearches=action.payload
+        }
     
     }
 })
 
-export const { toggleMode, enableLoader, disableLoader, changeTab } = miscSlice.actions;
+export const { toggleMode, saveRecentSearches, enableLoader, disableLoader, changeTab } = miscSlice.actions;
 
 export default miscSlice.reducer;

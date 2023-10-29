@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { changeTab } from '@/redux/slices/miscSlice';
 import { GlobalState } from '@/redux/store';
 import { saveActivelyTraded, saveGainers, saveLosers } from '@/redux/slices/stockSlice';
-import { Sort } from 'iconsax-react';
 
 const arr = [
   { key: 1, title: "Top Gainers" },
@@ -92,7 +91,7 @@ const Menu = () => {
               } else {
                 sortByPrice()
               }
-              setSortType(item.key)
+              setSortType(String(item.key))
             }} />
           })
         }

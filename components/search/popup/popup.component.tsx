@@ -37,6 +37,7 @@ const SearchResults = ({ query, setQuery }: { query: string, setQuery: Function 
 
 
   // @ts-ignore
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const addToRecentSearches = () => {
     if (recentSearches.includes(query)) return
     dispatch(saveRecentSearches([...recentSearches, query]))

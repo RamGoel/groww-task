@@ -25,13 +25,13 @@ const CompanyPage = () => {
   const change_percentage = searchParams.get('change_percentage')
   const dispatch = useAppDispatch()
 
- 
+
   useEffect(() => {
     function fetchCompanyDataAction() {
       dispatch(getCompanyData(id ?? 'IBM'))
     }
     fetchCompanyDataAction()
-  }, [])
+  }, [dispatch, id])
 
   if (!companyData || !companyData.Symbol) {
     return <ScreenLoader />;
@@ -59,7 +59,7 @@ const CompanyPage = () => {
           <Info title={'Market Capitalization'} value={companyData?.Currency} />
         </div>
 
-        
+
       </div>
 
     </div>

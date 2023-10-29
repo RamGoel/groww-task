@@ -9,7 +9,7 @@ const StockCard = ({stock}: { stock: any }) => {
     const dispatch = useDispatch()
     const {ticker, volume, price, change_amount, change_percentage} = stock
     return (
-        <Link href={'/company'} onClick={() => {
+        <Link href={`/company/${'IBM'}`} onClick={() => {
             dispatch(saveSelectedCard({...stock, ticker: 'IBM'}))
         }}>
             <div className='rounded-xl mx-auto transition-all cursor-pointer p-4 border-2 border-greylight  my-3'

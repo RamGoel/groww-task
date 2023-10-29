@@ -29,7 +29,7 @@ const Chart = ({ Symbol }: ChartProps) => {
             setAxisMax(Math.max(...chartDateAndClose.map((item: any) => item.Close)))
         }
         fetchChartData()
-    },[])
+    },[Symbol])
     if (!chartData) {
         return <ScreenLoader />
     }

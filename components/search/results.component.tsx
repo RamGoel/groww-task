@@ -1,7 +1,7 @@
 import { API } from '@/api/client'
 import { saveResults } from '@/redux/slices/stockSlice'
 import { GlobalState } from '@/redux/store'
-import React, { SetStateAction, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { ActionLoader } from '../loader/actionloader.component'
 import SearchCard from './search.card'
@@ -30,7 +30,7 @@ const SearchResults = ({ query, setQuery }: { query: string, setQuery:Function }
     return () => {
       localStorage.setItem(CommonConstants.recentSearchesKey, JSON.stringify(recentSearches));
     }
-  }, []);
+  }, [dispatch, recentSearches]);
 
   useEffect(() => {
     const fetchResults = async (_query: string) => {
@@ -63,7 +63,7 @@ const SearchResults = ({ query, setQuery }: { query: string, setQuery:Function }
       clearTimeout(timeoutId)
       dispatch(saveResults(null))
     }
-  }, [query, dispatch])
+  }, [query, dispatch, recentSearches])
 
 
   return (

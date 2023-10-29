@@ -58,7 +58,7 @@ const Header = () => {
                 <SearchNormal className='text-gray-500 dark:text-white mr-2' size={17} />
                 <input onChange={(e) => setQuery(e.target.value)} type="text" placeholder="Search" className='bg-transparent text-gray-500 text-sm dark:text-white py-1 focus-visible:outline-none' />
               </div>
-              {query !== '' ? <SearchResults query={query} /> : null}
+              {query !== '' ? <SearchResults setQuery={(val: string) => setQuery(val)} query={query} /> : null}
             </div>
           </div>
         </div> : null}

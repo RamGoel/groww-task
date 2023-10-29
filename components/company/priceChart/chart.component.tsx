@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Line } from "@ant-design/charts";
 import { API } from '@/api/client';
 import { CommonConstants } from '@/utils/constants';
-import { ScreenLoader } from '../loader/loader.component';
+import { ScreenLoader } from '../../loader/screenLoader/loader.component';
 
 export interface ChartProps {
     Symbol: string

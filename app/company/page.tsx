@@ -1,18 +1,16 @@
 "use client";
-import { API } from '@/api/client';
-import Chip from '@/components/common/chip.component';
-import Header from '@/components/common/header.component';
-import Info from '@/components/common/info.component';
-import CompanyAbout from '@/components/company/about.component';
-import CompanyHeader from '@/components/company/company.header';
-import Chart from '@/components/company/chart.component';
-import { disableLoader, enableLoader } from '@/redux/slices/miscSlice';
-import { saveCompanyData } from '@/redux/slices/stockSlice';
+import Chip from '@/components/common/textChip/chip.component';
+import Header from '@/components/common/pageHeader/header.component';
+import Info from '@/components/common/insightBox/info.component';
+import CompanyAbout from '@/components/company/companyAbout/about.component';
+import CompanyHeader from '@/components/company/companyDetails/details.component';
+import Chart from '@/components/company/priceChart/chart.component';
 import { GlobalState } from '@/redux/store';
 import { useSearchParams } from 'next/navigation'
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import toast from 'react-hot-toast';
+import { getCompanyData } from './company.actions';
+import { useAppDispatch } from '@/redux/provider';
 
 
 const CompanyPage = () => {
@@ -21,28 +19,10 @@ const CompanyPage = () => {
   const isDarkMode = useSelector((state: GlobalState) => state.misc.isDarkMode)
 
   const id = searchParams.get('id')
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
 
   useEffect(() => {
-    const fetchCompanyData = async () => {
-      dispatch(enableLoader())
-      try {
-        const res = await API.get('/', { params: { function: 'OVERVIEW', symbol: id } })
-        console.log(res.data)
-        if (res.data['Error Message']) {
-          toast.error('No Data Found')
-          throw new Error('API Limit Reached')
-
-        }
-        dispatch(saveCompanyData(res.data))
-      } catch (err) {
-        console.log(err)
-        dispatch(saveCompanyData(null))
-      } finally {
-        dispatch(disableLoader())
-      }
-    }
-    fetchCompanyData();
+    dispatch(getCompanyData(id ?? 'IBM'))
   }, [dispatch, id])
 
   if (!companyData) {

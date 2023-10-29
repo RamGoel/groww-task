@@ -1,10 +1,15 @@
 "use client";
-import Header from '@/components/common/header.component';
-import { ScreenLoader } from '@/components/loader/loader.component';
-import StockGrid from '@/components/explore/grid.component';
-import Menu from '@/components/explore/menu.component';
+import Header from '@/components/common/pageHeader/header.component';
+import { ScreenLoader } from '@/components/loader/screenLoader/loader.component';
+import Menu from '@/components/listing/stockControls/menu.component';
 import { GlobalState } from '@/redux/store';
 import { useSelector } from 'react-redux';
+import dynamic from 'next/dynamic';
+
+
+const DynamicGrid = dynamic(() => import('../components/listing/stockGrid/grid.component'), {
+  loading: () => <p>Loading...</p>,
+})
 
 
 export default function Home() {
@@ -16,7 +21,7 @@ export default function Home() {
         <ScreenLoader />
         <Header />
         <Menu />
-        <StockGrid />
+        <DynamicGrid />
       </div>
     </div>
   )

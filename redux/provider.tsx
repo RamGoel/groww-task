@@ -1,6 +1,6 @@
 import React from 'react';
-import { store } from './store';
-import { Provider } from 'react-redux';
+import { AppDispatch, store } from './store';
+import { Provider, useDispatch } from 'react-redux';
 
 
 export const ReduxProvider=({ children }: { children: React.ReactNode })=>{
@@ -8,3 +8,4 @@ export const ReduxProvider=({ children }: { children: React.ReactNode })=>{
         <Provider store={store}>{children}</Provider>
     )
 }
+export const useAppDispatch: () => AppDispatch = useDispatch;

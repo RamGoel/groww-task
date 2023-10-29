@@ -1,14 +1,12 @@
 "use client";
 import React, { useEffect } from 'react'
-import StockCard from './card.component'
-import { API } from '@/api/client'
-import { useDispatch, useSelector } from 'react-redux';
+import StockCard from '../stockCard/card.component'
+import { useSelector } from 'react-redux';
 import { GlobalState } from '@/redux/store';
-import { saveActivelyTraded, saveGainers, saveLosers } from '@/redux/slices/stockSlice';
 import { ArrowDown2 } from 'iconsax-react';
-import { disableLoader, enableLoader } from '@/redux/slices/miscSlice';
-import { ScreenLoader } from '../loader/loader.component';
-import toast from 'react-hot-toast';
+import { ScreenLoader } from '../../loader/screenLoader/loader.component';
+import { fetchMoreStocks, fetchStockList } from './grid.actions';
+import { useAppDispatch } from '@/redux/provider';
 
 
 const StockGrid = () => {
@@ -16,44 +14,16 @@ const StockGrid = () => {
     const losers = useSelector((state: GlobalState) => state.stock.losers)
     const activelyTraded = useSelector((state: GlobalState) => state.stock.activelyTraded)
     const tab = useSelector((state: GlobalState) => state.misc.tab)
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
     const loader = useSelector((state: GlobalState) => state.misc.loader)
 
 
     const fetchMoreData = async () => {
-        dispatch(enableLoader())
-        try {
-            const res = await API.get('/', { params: { function: 'TOP_GAINERS_LOSERS' } })
-            console.log(res.data)
-            dispatch(saveGainers([...gainers, ...res.data.top_gainers]))
-            dispatch(saveLosers([...losers, ...res.data.top_losers]))
-            dispatch(saveActivelyTraded([...activelyTraded, ...res.data.most_actively_traded]))
-        } catch (error) {
-            console.log(error)
-            return error
-        } finally {
-            dispatch(disableLoader())
-        }
+        dispatch(fetchMoreStocks(gainers, losers, activelyTraded))
     }
 
     useEffect(() => {
-        const fetchData = async () => {
-            dispatch(enableLoader())
-            try {
-                const res = await API.get('/', { params: { function: 'TOP_GAINERS_LOSERS' } })
-                console.log(res.data)
-                dispatch(saveGainers(res.data.top_gainers))
-                dispatch(saveLosers(res.data.top_losers))
-                dispatch(saveActivelyTraded(res.data.most_actively_traded))
-            } catch (error) {
-                toast.error("Some Error Occured")
-                console.log(error)
-                return error
-            } finally {
-                dispatch(disableLoader())
-            }
-        }
-        fetchData()
+        dispatch(fetchStockList())
     }, [dispatch])
 
     if (!gainers || !losers) {

@@ -1,5 +1,5 @@
 import React from 'react'
-import Logo from '../common/logo.component'
+import Logo from '../../common/stockLogo/logo.component'
 import Link from 'next/link'
 import { useDispatch } from 'react-redux'
 import { saveSelectedCard } from '@/redux/slices/stockSlice'

@@ -1,14 +1,15 @@
-import { API } from '@/api/client'
 import { saveResults } from '@/redux/slices/stockSlice'
 import { GlobalState } from '@/redux/store'
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { ActionLoader } from '../loader/actionloader.component'
-import SearchCard from './search.card'
-import Chip from '../common/chip.component'
+import { ActionLoader } from '../../loader/actionLoader/loader.component'
+import SearchCard from '../item/item.component'
+import Chip from '../../common/textChip/chip.component'
 import { CommonConstants } from '@/utils/constants'
 import { saveRecentSearches } from '@/redux/slices/miscSlice'
 import { SearchNormal1, TrendUp } from 'iconsax-react'
+import { fetchSearchResults } from './popup.actions'
+import { useAppDispatch } from '@/redux/provider'
 
 
 
@@ -18,7 +19,7 @@ const SearchResults = ({ query, setQuery }: { query: string, setQuery: Function 
   const [types, setTypes] = React.useState<Array<string>>([])
   const [category, setCategory] = React.useState('All')
   const [isLoading, setLoading] = React.useState(false)
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
 
 
   useEffect(() => {
@@ -30,40 +31,18 @@ const SearchResults = ({ query, setQuery }: { query: string, setQuery: Function 
     return () => {
       localStorage.setItem(CommonConstants.recentSearchesKey, JSON.stringify(recentSearches));
     }
-  }, [dispatch, recentSearches]);
+  }, []);
 
   useEffect(() => {
-    const fetchResults = async (_query: string) => {
-      try {
-        setLoading(true)
-        const res = await API.get('/', { params: { function: 'SYMBOL_SEARCH', keywords: _query } })
-        const uniqueTypes: Array<string> = Array.from(new Set(res.data.bestMatches.map((item: any) => item['3. type'])))
-        const uniqueTypesArr = ['All', ...uniqueTypes]
-        dispatch(saveResults(res.data.bestMatches))
-        setTypes([...uniqueTypesArr])
-        if (recentSearches) {
-          if (recentSearches.includes(_query)) return
-          dispatch(saveRecentSearches([...recentSearches, _query]));
-        } else {
-          dispatch(saveRecentSearches([_query]));
-        }
-        console.log(recentSearches)
-      } catch (error) {
-        console.log(error)
-        return error
-      } finally {
-        setLoading(false)
-      }
-    }
     const timeoutId = setTimeout(() => {
-      fetchResults(query)
+      dispatch(fetchSearchResults(query, setTypes, setLoading, recentSearches))
     }, 1000)
 
     return () => {
       clearTimeout(timeoutId)
       dispatch(saveResults(null))
     }
-  }, [query, dispatch, recentSearches])
+  }, [query, dispatch])
 
 
   return (

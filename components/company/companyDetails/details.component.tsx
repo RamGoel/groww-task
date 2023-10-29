@@ -1,5 +1,5 @@
 import React from 'react'
-import Logo from '../common/logo.component'
+import Logo from '../../common/stockLogo/logo.component'
 import { GlobalState } from '@/redux/store'
 import { useSelector } from 'react-redux'
 

@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from 'react'
-import Chip from '../common/chip.component'
+import Chip from '../../common/textChip/chip.component'
 import { useDispatch, useSelector } from 'react-redux';
 import { changeTab } from '@/redux/slices/miscSlice';
 import { GlobalState } from '@/redux/store';

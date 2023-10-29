@@ -4,7 +4,7 @@ import Image from 'next/image'
 import { Menu, SearchNormal } from 'iconsax-react'
 import { useDispatch, useSelector } from 'react-redux'
 import { toggleMode } from '@/redux/slices/miscSlice'
-import SearchResults from '../search/results.component'
+import SearchResults from '../../search/popup/popup.component'
 import { useRouter } from 'next/navigation'
 import { GlobalState } from '@/redux/store'
 const Header = () => {

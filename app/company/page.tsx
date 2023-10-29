@@ -11,6 +11,7 @@ import React, { useEffect } from 'react'
 import { useSelector } from 'react-redux';
 import { getCompanyData } from './company.actions';
 import { useAppDispatch } from '@/redux/provider';
+import { ScreenLoader } from '@/components/loader/screenLoader/loader.component';
 
 
 const CompanyPage = () => {
@@ -19,14 +20,17 @@ const CompanyPage = () => {
   const isDarkMode = useSelector((state: GlobalState) => state.misc.isDarkMode)
 
   const id = searchParams.get('id')
+  const price = searchParams.get('price')
+  const change_amount = searchParams.get('change_amount')
+  const change_percentage = searchParams.get('change_percentage')
   const dispatch = useAppDispatch()
 
   useEffect(() => {
     dispatch(getCompanyData(id ?? 'IBM'))
-  }, [dispatch, id])
+  }, [dispatch])
 
-  if (!companyData) {
-    return null;
+  if (!companyData || !companyData.Symbol) {
+    return <ScreenLoader />;
   }
 
   return (
@@ -34,12 +38,12 @@ const CompanyPage = () => {
       <div className='bg-white dark:bg-black '>
 
         <Header />
-        <CompanyHeader {...companyData} />
+        <CompanyHeader change_amount={change_amount} change_percentage={change_percentage} price={price} {...companyData} />
         <div className="flex flex-wrap gap-2 items-center w-10/12 mx-auto my-3">
           <Chip isSelected={false} text={`SECTOR: ${companyData.Sector}`} />
           <Chip isSelected={false} text={`INDUSTRY: ${companyData.Industry}`} />
         </div>
-        <Chart Symbol={id ?? 'IBM'} />
+        <Chart Symbol={companyData.Symbol} />
 
         <CompanyAbout {...companyData} />
 
@@ -50,6 +54,8 @@ const CompanyPage = () => {
           <Info title={'Currency'} value={companyData?.Currency} />
           <Info title={'Market Capitalization'} value={companyData?.Currency} />
         </div>
+
+        
       </div>
 
     </div>

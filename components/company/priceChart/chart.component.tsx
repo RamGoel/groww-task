@@ -1,35 +1,42 @@
 import React, { useEffect, useState } from 'react'
 import { Line } from "@ant-design/charts";
-import { API } from '@/libs/client';
-import { CommonConstants } from '@/utils/constants';
 import { ScreenLoader } from '../../loader/screenLoader/loader.component';
+import { useAppDispatch } from '@/redux/provider';
+import { fetchChartData } from './chart.actions';
+import { ActionLoader } from '@/components/loader/actionLoader/loader.component';
 
 export interface ChartProps {
     Symbol: string
 }
+const ranges = [
+    {
+        text: 'Intraday',
+        value: "TIME_SERIES_INTRADAY"
+    }, {
+        text: 'Daily',
+        value: "TIME_SERIES_DAILY"
+    }, {
+        text: 'Weekly',
+        value: "TIME_SERIES_WEEKLY"
+    }, {
+        text: 'Monthly',
+        value: "TIME_SERIES_MONTHLY"
+    },
+]
+
+
 const Chart = ({ Symbol }: ChartProps) => {
     const [chartData, setChartData] = useState<Array<any> | null>(null)
     const [axisMin, setAxisMin] = useState(0);
     const [axisMax, setAxisMax] = useState(0);
-
+    const [fetchFn, setFunction] = useState('TIME_SERIES_DAILY')
+    const dispatch = useAppDispatch()
+    const [isLoading, setIsLoading] = useState(false)
 
     useEffect(() => {
-        const fetchChartData = async () => {
-            const res = await API.get('/', { params: { function: 'TIME_SERIES_DAILY', symbol: Symbol, apikey: process.env.NEXT_PUBLIC_API_KEY } })
-            console.log(res.data)
-            const chartDates = res.data[CommonConstants.chartDataKey]
-            const chartDateAndClose = Object.keys(chartDates).map((date: string) => {
-                return {
-                    Date: date,
-                    Close: parseFloat(chartDates[date][CommonConstants.closeDataKey])
-                }
-            })
-            setChartData(chartDateAndClose)
-            setAxisMin(Math.min(...chartDateAndClose.map((item: any) => item.Close)))
-            setAxisMax(Math.max(...chartDateAndClose.map((item: any) => item.Close)))
-        }
-        fetchChartData()
-    },[Symbol])
+        dispatch(fetchChartData(setIsLoading, fetchFn, Symbol, setChartData, setAxisMin, setAxisMax))
+    }, [Symbol, fetchFn])
+
     if (!chartData) {
         return <ScreenLoader />
     }
@@ -49,11 +56,23 @@ const Chart = ({ Symbol }: ChartProps) => {
                 }}
                 yAxis={{
                     grid: { line: { style: { lineWidth: 0 } } },
-                    min: axisMin, 
+                    min: axisMin,
                     max: axisMax,
                 }}
                 smooth
             />
+
+            <div className='flex flex-wrap gap-2 items-center my-4 justify-center'>
+                {
+                    ranges.map((item) => {
+                        return <div key={item.value} onClick={() => {
+                            setFunction(item.value)
+                        }} className={`${fetchFn === item.value ? 'bg-brandgreen text-white border-2 border-brandgreen' : 'bg-white border-2 border-brandgreen text-brandgreen'} hover:bg-brandgreenlight cursor-pointer py-1 px-2 rounded-full flex items-center justify-center mx-2`} style={{minWidth:70, height:30}} >
+                            <span className={`text-xs font-semibold`}>{isLoading && fetchFn === item.value ? <ActionLoader /> : item.text}</span>
+                        </div>
+                    })
+                }
+            </div>
         </div>
     )
 }

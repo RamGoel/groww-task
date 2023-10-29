@@ -1,8 +1,6 @@
-import { StorageUtils } from "@/libs/cache"
 import { API } from "@/libs/client"
 import { saveRecentSearches } from "@/redux/slices/miscSlice"
 import { saveResults } from "@/redux/slices/stockSlice"
-import { CommonConstants } from "@/utils/constants"
 import toast from "react-hot-toast"
 
 export const fetchSearchResults = (_query:string,setTypes:Function, setLoading:Function, _recentSearches:any) => {

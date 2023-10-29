@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Line } from "@ant-design/charts";
-import { API } from '@/api/client';
+import { API } from '@/libs/client';
 import { CommonConstants } from '@/utils/constants';
 import { ScreenLoader } from '../../loader/screenLoader/loader.component';
 

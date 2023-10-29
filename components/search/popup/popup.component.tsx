@@ -10,6 +10,7 @@ import { saveRecentSearches } from '@/redux/slices/miscSlice'
 import { SearchNormal1, TrendUp } from 'iconsax-react'
 import { fetchSearchResults } from './popup.actions'
 import { useAppDispatch } from '@/redux/provider'
+import { StorageUtils } from '@/libs/cache'
 
 
 
@@ -23,13 +24,13 @@ const SearchResults = ({ query, setQuery }: { query: string, setQuery: Function 
 
 
   useEffect(() => {
-    const storedSearches = localStorage.getItem(CommonConstants.recentSearchesKey);
+    const storedSearches = StorageUtils._retrieve(CommonConstants.recentSearchesKey);
     if (storedSearches) {
       dispatch(saveRecentSearches(JSON.parse(storedSearches)));
     }
 
     return () => {
-      localStorage.setItem(CommonConstants.recentSearchesKey, JSON.stringify(recentSearches));
+      StorageUtils._save(CommonConstants.recentSearchesKey, recentSearches);
     }
   }, []);
 

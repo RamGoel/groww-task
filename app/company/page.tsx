@@ -8,7 +8,7 @@ import Chart from '@/components/company/priceChart/chart.component';
 import { GlobalState } from '@/redux/store';
 import { useSearchParams } from 'next/navigation'
 import React, { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { getCompanyData } from './company.actions';
 import { useAppDispatch } from '@/redux/provider';
 

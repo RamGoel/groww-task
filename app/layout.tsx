@@ -4,8 +4,8 @@ import './globals.css'
 import { ReduxProvider } from '@/redux/provider'
 import { Toaster } from 'react-hot-toast';
 import { useEffect } from 'react';
-import addInterceptor from '@/api/interceptor';
-import { API } from '@/api/client';
+import addInterceptor from '@/libs/interceptor';
+import { API } from '@/libs/client';
 
 const inter = Inter({ subsets: ['latin'] })
 

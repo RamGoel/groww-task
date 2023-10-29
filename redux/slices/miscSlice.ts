@@ -10,7 +10,7 @@ const initialState:MiscSliceProps = {
     loader: false,
     isDarkMode: false,
     tab: "Top Gainers",
-    recentSearches:null
+    recentSearches:[]
 }
 
 

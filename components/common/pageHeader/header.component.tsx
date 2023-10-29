@@ -16,7 +16,6 @@ const Header = () => {
 
   useEffect(() => {
     if(!open) setQuery('')
-
   }, [open])
   
   return (

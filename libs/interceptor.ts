@@ -4,7 +4,7 @@ const excludedFunctions = ['SYMBOL_SEARCH']
 const isThrowError = false;
 export default function addInterceptor(_API: any) {
     _API.interceptors.request.use((config: any) => {
-        
+
         if (!navigator.onLine) {
             new axios.Cancel("No Internet Connection")
         }
@@ -31,7 +31,7 @@ export default function addInterceptor(_API: any) {
                 if (isThrowError) {
                     throw customError;
                 }
-                location.replace('error')
+                // location.replace('error')
             }
         }
         return response

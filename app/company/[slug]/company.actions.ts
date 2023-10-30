@@ -7,14 +7,14 @@ import toast from "react-hot-toast"
 
 export const getCompanyData = (_id: string | string[]) => {
     return async (dispatch: Function) => {
-        // const dataFromCache = StorageUtils._retrieve(CommonConstants.companyDataCacheKey)
-        // if (dataFromCache) {
-        //     const parsedData = JSON.parse(dataFromCache)
-        //     if (parsedData.Symbol === _id) {
-        //         dispatch(saveCompanyData(parsedData))
-        //         return;
-        //     }
-        // }
+        const dataFromCache = StorageUtils._retrieve(CommonConstants.companyDataCacheKey)
+        if (dataFromCache.isValid && dataFromCache.data !== null) {
+            const parsedData = dataFromCache.data
+            if (parsedData.Symbol === _id) {
+                dispatch(saveCompanyData(parsedData))
+                return;
+            }
+        }
 
         dispatch(enableLoader())
 

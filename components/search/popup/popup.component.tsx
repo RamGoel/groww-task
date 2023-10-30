@@ -9,7 +9,7 @@ import {CommonConstants} from '@/utils/constants'
 import {saveRecentSearches} from '@/redux/slices/miscSlice'
 import {SearchNormal1} from 'iconsax-react'
 import {fetchSearchResults} from './popup.actions'
-import {useAppDispatch} from '@/redux/provider'
+import {useAppDispatch} from '@/providers/ReduxProvider'
 import {StorageUtils} from '@/libs/cache'
 
 
@@ -25,8 +25,8 @@ const SearchResults = ({query, setQuery}: { query: string, setQuery: Function })
     useEffect(() => {
         function retrieveSearches() {
             const storedSearches = StorageUtils._retrieve(CommonConstants.recentSearchesKey);
-            if (storedSearches) {
-                dispatch(saveRecentSearches(JSON.parse(storedSearches)));
+            if (storedSearches.isValid && storedSearches.data !== null) {
+                dispatch(saveRecentSearches(storedSearches.data));
             }
         }
 
@@ -34,10 +34,6 @@ const SearchResults = ({query, setQuery}: { query: string, setQuery: Function })
 
 
     }, [dispatch]);
-
-    useEffect(() => {
-        StorageUtils._save(CommonConstants.recentSearchesKey, recentSearches)
-    }, [recentSearches]);
 
 
     useEffect(() => {

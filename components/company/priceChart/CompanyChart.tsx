@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import {Line} from "@ant-design/charts";
 import {ScreenLoader} from '../../loader/screenLoader/loader.component';
-import {useAppDispatch} from '@/redux/provider';
+import {useAppDispatch} from '@/providers/ReduxProvider';
 import {fetchChartData} from './chart.actions';
 import {ActionLoader} from '@/components/loader/actionLoader/loader.component';
 

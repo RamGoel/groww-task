@@ -1,7 +1,7 @@
 "use client";
 import React from 'react'
 import Link from "next/link";
-import {useAppDispatch} from "@/redux/provider";
+import {useAppDispatch} from "@/providers/ReduxProvider";
 import {saveSelectedCard} from "@/redux/slices/stockSlice";
 import {useSelector} from "react-redux";
 import {GlobalState} from "@/redux/store";

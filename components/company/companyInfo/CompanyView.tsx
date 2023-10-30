@@ -8,7 +8,7 @@ import CompanyHeader from "@/components/company/companyDetails/details.component
 import {useSelector} from "react-redux";
 import {GlobalState} from "@/redux/store";
 import {getCompanyData} from "@/app/company/[slug]/company.actions";
-import {useAppDispatch} from "@/redux/provider";
+import {useAppDispatch} from "@/providers/ReduxProvider";
 import {ActionLoader} from "@/components/loader/actionLoader/loader.component";
 
 const CompanyChart = React.lazy(() => import('@/components/company/priceChart/CompanyChart'))

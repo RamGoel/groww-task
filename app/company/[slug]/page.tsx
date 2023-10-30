@@ -9,7 +9,7 @@ const CompanyPage = ({params}: any) => {
     console.log(params)
     return (
         <Suspense fallback={<ActionLoader/>}>
-            <div className={'dark'}>
+            <div className={''}>
                 <CompanyView _id={params.slug}/>
             </div>
         </Suspense>
